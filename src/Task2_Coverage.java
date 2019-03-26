@@ -282,4 +282,33 @@ public class Task2_Coverage {
 		assertEquals(optionMap.getType("f"), OptionMap.STRING);
 	}
 	
+	// Testing OptionMap.isOptionValid() function
+	
+	@Test
+	public void InvalidOptionSmallerThan1Test() {
+		try {
+			parser.add("invalid", 0);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void InvalidOptionBiggerThan4Test() {
+		try {
+			parser.add("invalid", 9);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	// Testing OptionMap.toString()
+	
+	@Test
+	public void OptionMapToStringTest() {
+		parser.add("output", "o", Parser.STRING);
+		parser.parse("-o 2.txt");
+		assertEquals(parser.toString(), "OptionMap [options=\n\t{name=output, shortcut=o, type=3, value=2.txt}\n]");
+	}
+	
 }
