@@ -2,12 +2,14 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import st.OptionMap;
 import st.Parser;
 
 import org.junit.Before;
 
 public class Task2_Coverage {
 	private Parser parser;
+	private OptionMap optionMap;
 	
 	@Before
 	public void set_up() {
@@ -225,7 +227,7 @@ public class Task2_Coverage {
 		}
 	}
 	
-	//Following tests are for testing the isOptionValid() function using Parser.add() which uses OptionMap.store() 
+	// Testing the OptionMap.isOptionValid() function using Parser.add() which uses OptionMap.store() 
 	
 	@Test
 	public void StoreEmptyNameTest() {
@@ -256,4 +258,28 @@ public class Task2_Coverage {
 			e.printStackTrace();
 		}
 	}
+	
+	// Testing OptionMap.getType() function
+	
+	@Test
+	public void GetTypeOfExistingNameTest() {
+		optionMap = new OptionMap();
+		optionMap.store("filename", "", OptionMap.STRING);
+		assertEquals(optionMap.getType("filename"), OptionMap.STRING);
+	}
+	
+	@Test
+	public void GetTypeOfNonexistingNameTest() {
+		optionMap = new OptionMap();
+		optionMap.store("optimize", "", OptionMap.BOOLEAN);
+		assertEquals(optionMap.getType("filename"), 0);
+	}
+	
+	@Test
+	public void GetTypeOfExistingShortcutTest() {
+		optionMap = new OptionMap();
+		optionMap.store("filename", "f", OptionMap.STRING);
+		assertEquals(optionMap.getType("f"), OptionMap.STRING);
+	}
+	
 }
