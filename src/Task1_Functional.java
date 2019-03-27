@@ -49,14 +49,12 @@ public class Task1_Functional {
 	@Test
 	public void CaseSensitiveShortCutTest () {
 		parser.add("output", "o", Parser.STRING);
-		parser.parse("-o 2.txt");
 		assertNotEquals(parser.getString("O"), "2.txt");
 	}
 	
 	@Test
 	public void CaseSensitiveNameTest () {
 		parser.add("output", "o", Parser.STRING);
-		parser.parse("--output 2.txt");
 		assertNotEquals(parser.getString("OUTPUT"), "2.txt");
 	}
 	
@@ -136,7 +134,6 @@ public class Task1_Functional {
 	@Test
 	public void CaseSensitiveShortCutTest_2 () {
 		parser.add("output",Parser.STRING);
-		parser.parse("-o 2.txt");
 		assertNotEquals(parser.getString("O"), "2.txt");
 	}
 	
@@ -203,5 +200,99 @@ public class Task1_Functional {
 		parser.add("output","o",Parser.BOOLEAN);
 		parser.parse("--o=2.txt");
 		assertNotEquals(parser.getBoolean("o"), true);
+	}
+	
+	@Test
+	public void ValueAssingmetTest () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o=2.txt");
+		assertEquals(parser.getString("o"), "2.txt");
+	}
+	
+	@Test
+	public void ValueAssingmetTest_2 () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o 2.txt");
+		assertEquals(parser.getString("o"), "2.txt");
+	}
+	@Test
+	public void ValueAssingmetTest_3 () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o='2.txt'");
+		assertEquals(parser.getString("o"), "2.txt");
+	}
+	
+	@Test
+	public void ValueAssingmetTest_4 () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o=\"2.txt\"");
+		assertEquals(parser.getString("o"), "2.txt");
+	}
+	
+	@Test
+	public void ValueAssingmetTest_5 () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o='value=\"2.txt\"'");
+		assertEquals(parser.getString("o"), "value=\"2.txt\"");
+	}
+	
+	@Test
+	public void ValueAssingmetTest_6 () {
+		parser.add("o",Parser.STRING);
+		parser.parse("--o='value=\"2.txt\"'");
+		parser.parse("--o='value=\"3.txt\"'");
+		parser.parse("--o='value=\"Jay&SamSTHustle\"'");
+		assertEquals(parser.getString("o"), "value=\"Jay&SamSTHustle\"");
+	}
+	
+	@Test
+	public void DefaultAsingmentTest () {
+		parser.parse("--o");
+		assertEquals(parser.getInteger("o"), 0);
+	}
+	
+	@Test
+	public void DefaultAsingmentTest_2 () {
+		parser.parse("--o");
+		assertEquals(parser.getBoolean("o"), false);
+	}
+	
+	@Test
+	public void DefaultAsingmentTest_3 () {
+		parser.parse("--o");
+		assertEquals(parser.getString("o"), "");
+	}
+	@Test
+	public void DefaultAsingmentTest_4 () {
+		parser.parse("--o --a");
+		assertEquals(parser.getChar("o"), '\0');
+	}
+//--------------Test cases for Retrieval functions-------------------//
+	@Test
+	public void RetrievalFunctionTest () {
+		parser.add("output","o",Parser.STRING);
+		parser.add("out","output",Parser.STRING);
+		parser.parse("--output=random");
+		parser.parse("-output=veryrandom");
+		assertEquals(parser.getString("o"), "random");
+	}
+	
+	@Test
+	public void DefaultRetrievalAsingmentTest () {
+		assertEquals(parser.getInteger("o"), 0);
+	}
+	
+	@Test
+	public void DefaultRetrievalAsingmentTest_2 () {
+		assertEquals(parser.getBoolean("o"), false);
+	}
+	
+	@Test
+	public void DefaultRetrievalAsingmentTest_3 () {
+		assertEquals(parser.getString("o"), "");
+	}
+	@Test
+	public void DefaultRetrievalAsingmentTest_4 () {
+		assertEquals(parser.getChar("o"), '\0');
 	}
 }
