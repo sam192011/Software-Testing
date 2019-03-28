@@ -1,6 +1,8 @@
 package st;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Parser {
 	public static final int INTEGER = 1;
@@ -21,7 +23,7 @@ public class Parser {
 	public void add(String option_name, int value_type) {
 		optionMap.store(option_name, "", value_type);
 	}
-
+	
 	public int getInteger(String option) {
 		String value = getString(option);
 		int type = getType(option);
@@ -195,6 +197,14 @@ public class Parser {
 		return 0;
 	}
 	
+	public List<Integer> getIntegerList(String command_line_options){
+		List<Integer> Integer_List = new ArrayList<Integer> ();
+		String parsed_string = getString(command_line_options);
+		if (command_line_options == null) {
+			return Integer_List;
+		}
+		return null;
+	}
 	private int getType(String option) {
 		int type = optionMap.getType(option);
 		return type;
