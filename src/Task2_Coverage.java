@@ -169,13 +169,20 @@ public class Task2_Coverage {
 		parser.parse("-i true");
 		assertEquals(parser.getInteger("i"), 1);
 	}
-//
-//	@Test
-//	public void getIntegerString() {
-//		parser.add("filename", "f", Parser.STRING);
-//		parser.parse("-f string");
-//		assertEquals()
-//	}
+
+	@Test
+	public void getIntegerNonDigitString() {
+		parser.add("filename", "f", Parser.STRING);
+		parser.parse("-f string");
+		assertEquals(parser.getInteger("f"), 0);
+	}
+	
+	@Test
+	public void getIntegerDigitString() {
+		parser.add("filename", "f", Parser.STRING);
+		parser.parse("-f 124");
+		assertEquals(parser.getInteger("f"), 124);
+	}
 
 	@Test
 	public void getIntegerChar() {
@@ -185,6 +192,23 @@ public class Task2_Coverage {
 	}
 
 	@Test
+	public void parseMultipleSpacesTest() {
+		parser.add("character", "c", Parser.STRING);
+		try {
+			parser.parse("      ");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseBooleanDefault() {
+		parser.add("character", "c", Parser.BOOLEAN);
+		parser.parse("--character -true");
+		assertEquals(parser.getBoolean("character"), true);
+		parser.parse("-c -true");
+		assertEquals(parser.getBoolean("character"), true);
+	}
 
 	//-------------------OLD TESTS FROM TASK 1 ------------------------//
 	//-----------------Test Cases for adding options with shortcut-----//
